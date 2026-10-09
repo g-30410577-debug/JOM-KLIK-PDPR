@@ -1,0 +1,767 @@
+
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMK SERI SAUJANA - Jom Click Ketika PdPR</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Fredoka & Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Fredoka', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 50%, #fef3c7 100%);
+            background-attachment: fixed;
+        }
+        .cert-border {
+            border: 10px double #2563eb;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        }
+        .bounce-subtle {
+            animation: bounceSubtle 2s infinite;
+        }
+        @keyframes bounceSubtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body class="text-slate-800 font-sans min-h-screen flex flex-col justify-between selection:bg-yellow-300 selection:text-slate-900">
+
+    <header class="bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3 text-center sm:text-left">
+                <div class="bg-yellow-400 text-purple-900 p-2 sm:p-3 rounded-2xl shadow-md flex items-center justify-center font-black text-2xl w-12 h-12 rotate-3 hover:rotate-0 transition-transform">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-display tracking-wider drop-shadow-sm font-bold">SMK SERI SAUJANA</h1>
+                    <p class="text-xs sm:text-sm text-yellow-200 font-medium"><i class="fa-solid fa-gamepad mr-1"></i> Jom Click Ketika PdPR • Modul Pemahaman BM</p>
+                </div>
+            </div>
+
+            <!-- Student Profile Badge -->
+            <div id="header-student-badge" class="hidden flex items-center gap-3 bg-white/20 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/30 text-xs sm:text-sm shadow-inner">
+                <div class="w-8 h-8 rounded-full bg-yellow-300 text-purple-900 flex items-center justify-center font-bold text-base">
+                    <i class="fa-solid fa-user-ninja"></i>
+                </div>
+                <div>
+                    <div id="badge-name" class="font-extrabold text-white">Nama Pelajar</div>
+                    <div id="badge-class" class="text-yellow-200 text-xs font-semibold">Kelas</div>
+                </div>
+                <button onclick="resetApp()" class="ml-2 text-xs bg-red-500 hover:bg-red-600 text-white px-2.5 py-1.5 rounded-xl transition shadow" title="Tukar Pelajar">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6 w-full flex-grow">
+
+        <section id="registration-screen" class="bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border-4 border-purple-200 max-w-lg mx-auto my-6 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-28 h-28 bg-yellow-300 rounded-full opacity-50 blur-lg"></div>
+            <div class="absolute -bottom-10 -left-10 w-28 h-28 bg-pink-400 rounded-full opacity-40 blur-lg"></div>
+
+            <div class="text-center mb-6 relative">
+                <span class="bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-xs uppercase tracking-wider px-4 py-1.5 rounded-full inline-block mb-3 shadow-md">
+                    <i class="fa-solid fa-heart mr-1"></i> Selamat Datang
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-display font-extrabold text-purple-900">Mula Latihan PdPR!</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1 font-medium">Isi nama dan kelas anda untuk mulakan tugasan membaca.</p>
+            </div>
+
+            <form id="student-form" onsubmit="submitStudentInfo(event)" class="space-y-4 relative">
+                <div>
+                    <label for="input-name" class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                        <i class="fa-solid fa-id-card text-pink-500 mr-1.5"></i>Nama Penuh Pelajar
+                    </label>
+                    <input type="text" id="input-name" required placeholder="Contoh: Muhammad Amir bin Rosli" 
+                        class="w-full px-4 py-3 rounded-2xl border-2 border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition text-slate-800 font-semibold text-sm">
+                </div>
+
+                <div>
+                    <label for="input-class" class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+                        <i class="fa-solid fa-school text-indigo-500 mr-1.5"></i>Kelas / Tingkatan
+                    </label>
+                    <input type="text" id="input-class" required placeholder="Contoh: 1 Saujana / 2 Cemerlang" 
+                        class="w-full px-4 py-3 rounded-2xl border-2 border-purple-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition text-slate-800 font-semibold text-sm">
+                </div>
+
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-4 text-xs text-amber-900 flex gap-3 items-center">
+                    <i class="fa-solid fa-award text-amber-500 text-2xl"></i>
+                    <div>
+                        <strong>Info Sijil:</strong> Selesaikan 4 petikan (40 soalan) untuk dapatkan **Sijil Penghargaan PdPR** dan tangkap skrin (screenshot) untuk cikgu!
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 hover:from-emerald-500 hover:to-cyan-600 text-white font-display font-bold py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-[0.98] flex items-center justify-center gap-2 text-base">
+                    <span>MULA MENJAWAB</span>
+                    <i class="fa-solid fa-circle-play text-xl"></i>
+                </button>
+            </form>
+        </section>
+
+        <section id="app-dashboard" class="hidden space-y-6">
+
+            <!-- Progress Dashboard Card -->
+            <div class="bg-white/90 backdrop-blur rounded-3xl p-5 sm:p-6 shadow-xl border-4 border-white flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="w-full md:w-2/3">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs sm:text-sm font-bold text-purple-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-line text-pink-500"></i> Progress Keseluruhan Soalan
+                        </span>
+                        <span id="overall-progress-text" class="text-xs sm:text-sm font-black text-indigo-600">0 / 40 Soalan</span>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden p-0.5 border border-slate-300">
+                        <div id="overall-progress-bar" class="bg-gradient-to-r from-pink-500 via-purple-500 to-emerald-400 h-full w-0 transition-all duration-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+                    <div class="text-center px-4 py-2 bg-gradient-to-br from-yellow-300 to-amber-400 rounded-2xl shadow border border-yellow-200 min-w-[90px]">
+                        <span class="block text-[10px] text-amber-950 font-extrabold uppercase">Markah</span>
+                        <span id="live-score" class="text-xl font-display font-black text-slate-900">0 / 40</span>
+                    </div>
+                    <button id="btn-show-cert" onclick="openCertificateScreen()" disabled class="bg-slate-300 text-slate-500 font-display font-bold px-4 py-3 rounded-2xl cursor-not-allowed flex items-center gap-2 transition text-xs sm:text-sm shadow-sm">
+                        <i class="fa-solid fa-certificate text-lg"></i>
+                        <span>Jana Sijil PdPR</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Colorful Reading Passage Navigation Tabs -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <button onclick="selectPassage(0)" id="tab-0" class="passage-tab border-4 border-pink-400 bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-3xl p-3.5 text-left transition transform hover:-translate-y-1 shadow-md relative">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-pink-200 mb-0.5"><i class="fa-solid fa-umbrella-beach"></i> Modul 1</div>
+                    <div class="text-xs sm:text-sm font-display font-bold line-clamp-1">Berkelah di Pantai</div>
+                    <span id="status-0" class="absolute top-2.5 right-2.5 text-xs text-yellow-300"><i class="fa-regular fa-circle"></i></span>
+                </button>
+
+                <button onclick="selectPassage(1)" id="tab-1" class="passage-tab border-4 border-slate-200 bg-white text-slate-700 hover:border-indigo-300 rounded-3xl p-3.5 text-left transition transform hover:-translate-y-1 shadow-md relative">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5"><i class="fa-solid fa-plane"></i> Modul 2</div>
+                    <div class="text-xs sm:text-sm font-display font-bold line-clamp-1">Cuti Sekolah Saya</div>
+                    <span id="status-1" class="absolute top-2.5 right-2.5 text-xs text-slate-300"><i class="fa-regular fa-circle"></i></span>
+                </button>
+
+                <button onclick="selectPassage(2)" id="tab-2" class="passage-tab border-4 border-slate-200 bg-white text-slate-700 hover:border-emerald-300 rounded-3xl p-3.5 text-left transition transform hover:-translate-y-1 shadow-md relative">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5"><i class="fa-solid fa-apple-whole"></i> Modul 3</div>
+                    <div class="text-xs sm:text-sm font-display font-bold line-clamp-1">Makanan Sihat</div>
+                    <span id="status-2" class="absolute top-2.5 right-2.5 text-xs text-slate-300"><i class="fa-regular fa-circle"></i></span>
+                </button>
+
+                <button onclick="selectPassage(3)" id="tab-3" class="passage-tab border-4 border-slate-200 bg-white text-slate-700 hover:border-amber-300 rounded-3xl p-3.5 text-left transition transform hover:-translate-y-1 shadow-md relative">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5"><i class="fa-solid fa-hands-holding-child"></i> Modul 4</div>
+                    <div class="text-xs sm:text-sm font-display font-bold line-clamp-1">Gotong-Royong</div>
+                    <span id="status-3" class="absolute top-2.5 right-2.5 text-xs text-slate-300"><i class="fa-regular fa-circle"></i></span>
+                </button>
+            </div>
+
+            <!-- Reading Passage Content Container -->
+            <div id="passage-card-bg" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-pink-200 transition-all">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 pb-3 border-b border-slate-200">
+                    <div>
+                        <span id="passage-badge" class="bg-pink-100 text-pink-700 text-xs font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider">Petikan 1 daripada 4</span>
+                        <h3 id="passage-title" class="text-2xl sm:text-3xl font-display font-black text-slate-800 mt-1">Tajuk Petikan</h3>
+                    </div>
+                </div>
+
+                <!-- Simplified Reading Text Box -->
+                <div id="passage-body" class="bg-gradient-to-r from-amber-50 to-orange-50 p-5 sm:p-6 rounded-2xl border-2 border-amber-200 text-slate-800 text-base sm:text-lg leading-relaxed font-medium mb-8 shadow-inner">
+                    <!-- Text inserted dynamically -->
+                </div>
+
+                <!-- Questions Header -->
+                <div class="flex items-center justify-between mb-6 bg-purple-50 p-3.5 rounded-2xl border border-purple-200">
+                    <h4 class="text-base sm:text-lg font-display font-bold text-purple-900 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question text-pink-500 text-xl"></i>
+                        <span>Soalan Pemahaman (10 Soalan)</span>
+                    </h4>
+                    <span class="text-xs font-bold bg-purple-200 text-purple-800 px-3 py-1 rounded-full">Jawab Semua</span>
+                </div>
+
+                <!-- Dynamic Questions List -->
+                <div id="questions-container" class="space-y-6">
+                    <!-- Questions injected dynamically -->
+                </div>
+
+                <!-- Bottom Navigation Controls -->
+                <div class="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <button id="btn-prev-passage" onclick="navigatePassage(-1)" class="w-full sm:w-auto px-5 py-3 rounded-2xl border-2 border-slate-300 text-slate-700 hover:bg-slate-100 font-bold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Petikan Sebelum</span>
+                    </button>
+
+                    <div class="text-center text-xs text-slate-500 font-semibold">
+                        Lengkapkan soalan sebelum berpindah modul!
+                    </div>
+
+                    <button id="btn-next-passage" onclick="navigatePassage(1)" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-display font-bold text-sm transition flex items-center justify-center gap-2 shadow-md">
+                        <span>Petikan Seterusnya</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="certificate-screen" class="hidden my-6">
+            
+            <div class="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-3xl shadow-lg border-2 border-purple-200">
+                <div>
+                    <h2 class="text-lg font-display font-bold text-purple-900">Tahniah! Modul PdPR Selesai 🎉</h2>
+                    <p class="text-xs text-slate-600 font-medium">Tangkap skrin (screenshot) sijil di bawah dan hantar kepada guru anda.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2 transition shadow">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Cetak / PDF</span>
+                    </button>
+                    <button onclick="closeCertificate()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2 transition">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Kembali</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PRINTABLE CERTIFICATE CARD -->
+            <div id="printable-certificate" class="cert-border rounded-3xl p-6 sm:p-12 shadow-2xl relative overflow-hidden text-center my-4">
+                
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-tr from-yellow-400 via-amber-500 to-orange-500 text-white rounded-3xl shadow-lg mb-4 border-4 border-white rotate-6">
+                    <i class="fa-solid fa-award text-4xl"></i>
+                </div>
+
+                <h1 class="text-2xl sm:text-4xl font-display font-black text-indigo-950 tracking-wider uppercase mb-1">SIJIL PENGHARGAAN PdPR</h1>
+                <p class="text-xs sm:text-sm font-bold text-purple-700 tracking-widest uppercase mb-6">SMK SERI SAUJANA • BAHASA MELAYU</p>
+
+                <p class="text-slate-600 text-sm sm:text-base italic mb-2">Dengan ini diperakui bahawa</p>
+                
+                <div id="cert-student-name" class="text-2xl sm:text-4xl font-display font-extrabold text-slate-900 border-b-4 border-yellow-400 inline-block px-8 py-2 mb-2">
+                    NAMA PELAJAR
+                </div>
+                <div id="cert-student-class" class="text-sm sm:text-lg font-bold text-indigo-800 mb-6">
+                    Kelas: -
+                </div>
+
+                <p class="text-slate-600 text-sm sm:text-base max-w-xl mx-auto mb-6 leading-relaxed font-medium">
+                    Telah berjaya menyempurnakan kesemua **4 Modul Latihan Membaca & Pemahaman Bahasa Melayu** bagi Pengajaran dan Pembelajaran di Rumah (PdPR).
+                </p>
+
+                <!-- Score Box -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-8">
+                    <div class="bg-pink-50 border-2 border-pink-200 p-3.5 rounded-2xl shadow-sm">
+                        <span class="block text-[10px] font-bold text-pink-600 uppercase">Jumlah Markah</span>
+                        <span id="cert-score-num" class="text-xl font-display font-black text-pink-900">0 / 40</span>
+                    </div>
+
+                    <div class="bg-emerald-50 border-2 border-emerald-200 p-3.5 rounded-2xl shadow-sm">
+                        <span class="block text-[10px] font-bold text-emerald-600 uppercase">Peratusan</span>
+                        <span id="cert-score-percent" class="text-xl font-display font-black text-emerald-900">0%</span>
+                    </div>
+
+                    <div class="bg-purple-50 border-2 border-purple-200 p-3.5 rounded-2xl shadow-sm">
+                        <span class="block text-[10px] font-bold text-purple-600 uppercase">Gred</span>
+                        <span id="cert-grade-text" class="text-lg font-display font-black text-purple-900">CEMERLANG</span>
+                    </div>
+                </div>
+
+                <!-- Footer Details -->
+                <div class="grid grid-cols-2 gap-6 items-end max-w-sm mx-auto pt-4 border-t-2 border-slate-200 text-xs">
+                    <div>
+                        <div id="cert-date" class="font-bold text-slate-800">09 Oktober 2026</div>
+                        <div class="text-slate-500">Tarikh Selesai</div>
+                    </div>
+                    <div>
+                        <div class="font-bold text-slate-900 underline decoration-yellow-400 decoration-2">Panitia Bahasa Melayu</div>
+                        <div class="text-slate-500">SMK Seri Saujana</div>
+                    </div>
+                </div>
+
+                <!-- Mandatory Prompt for Screenshot -->
+                <div class="mt-8 bg-gradient-to-r from-yellow-300 via-amber-300 to-orange-300 border-2 border-amber-500 p-4 rounded-2xl text-slate-900 text-xs sm:text-sm font-extrabold shadow-md flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-camera text-2xl text-amber-900 bounce-subtle"></i>
+                    <span>ARAHAN: Sila ambil <strong>tangkapan skrin (screenshot)</strong> sijil ini dan hantar kepada guru Bahasa Melayu anda (WhatsApp / Telegram / Google Classroom)!</span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-xs py-5 mt-8 text-center border-t border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 space-y-1">
+            <p class="font-bold text-slate-200">SMK SERI SAUJANA • Modul PdPR Bahasa Melayu</p>
+            <p class="text-[11px] text-slate-500">Jom Click Ketika PdPR Interaktif</p>
+        </div>
+    </footer>
+
+    <script>
+        let studentData = { name: '', class: '' };
+        let userAnswers = {}; 
+        let currentPassageIndex = 0;
+
+        // Simplified Reading Passages (4 topics x 10 questions = 40 questions total)
+        const readingPassages = [
+            {
+                id: 0,
+                title: "Berkelah di Tepi Pantai",
+                badge: "Petikan 1",
+                colorTheme: "border-pink-300 bg-pink-50",
+                content: `Pada hari Ahad lalu, keluarga Amir pergi berkelah di Pantai Teluk Cempedak. Mereka bertolak pada pukul 8:00 pagi dengan menaiki kereta.
+
+Semasa tiba di pantai, cuaca sangat cerah. Bapa membentang tikar di bawah pokok yang rindang. Ibu pula menyusun bekalan makanan seperti nasi lemak, ayam goreng, dan buah-buahan.
+
+Amir dan adiknya gembira bermain pasir dan berenang di laut. Sebelum pulang, mereka mengutip semua sampah dan membuangnya ke dalam tong sampah supaya pantai kekal bersih.`,
+                questions: [
+                    { id: 0, type: "mcq", question: "1. Ke manakah keluarga Amir pergi berkelah?", options: ["Pantai Teluk Cempedak", "Taman Bunga", "Air Terjun", "Muzium"], answer: "Pantai Teluk Cempedak" },
+                    { id: 1, type: "mcq", question: "2. Pada pukul berapakah mereka bertolak?", options: ["7:00 pagi", "8:00 pagi", "9:00 pagi", "10:00 pagi"], answer: "8:00 pagi" },
+                    { id: 2, type: "mcq", question: "3. Apakah kenderaan yang digunakan?", options: ["Bas", "Kereta", "Motosikal", "Basikal"], answer: "Kereta" },
+                    { id: 3, type: "tf", question: "4. Ibu menyusun bekalan makanan seperti nasi lemak dan ayam goreng.", answer: "Betul" },
+                    { id: 4, type: "tf", question: "5. Amir membakar sampah di tepi pantai sebelum pulang.", answer: "Salah" },
+                    { id: 5, type: "fill", question: "6. Bapa membentang [BLANK] di bawah pokok rindang.", words: ["tikar", "khemah", "meja", "kerusi"], answer: "tikar" },
+                    { id: 6, type: "fill", question: "7. Amir dan adiknya gembira bermain [BLANK] di tepi pantai.", words: ["pasir", "bola", "layang-layang", "basikal"], answer: "pasir" },
+                    { id: 7, type: "mcq", question: "8. Mengapakah sampah perlu dibuang ke dalam tong sampah?", options: ["Supaya pantai kekal bersih", "Supaya pantai menjadi kotor", "Untuk diberi pada ikan", "Sebab main-main"], answer: "Supaya pantai kekal bersih" },
+                    { id: 8, type: "reorder", question: "9. Susun perkataan menjadi ayat yang betul:", scramble: ["Amir", "pasir", "bermain", "di", "pantai"], answer: "Amir bermain pasir di pantai" },
+                    { id: 9, type: "mcq", question: "10. Apakah aktiviti lain yang dilakukan Amir dan adiknya?", options: ["Berenang di laut", "Mendaki gunung", "Membeli baju", "Memancing ikan"], answer: "Berenang di laut" }
+                ]
+            },
+            {
+                id: 1,
+                title: "Cuti Sekolah Saya",
+                badge: "Petikan 2",
+                colorTheme: "border-indigo-300 bg-indigo-50",
+                content: `Semasa cuti sekolah, saya pulang ke kampung di Kuala Kangsar, Perak. Saya sangat gembira kerana dapat melawat datuk dan nenek.
+
+Di kampung, saya mengikut datuk ke dusun buah. Saya memetik buah rambutan dan durian yang manis. Pada waktu petang, saya membantu nenek memberi makan kepada ayam dan itik.
+
+Saya juga belajar memancing ikan di sungai bersama sepupu. Pengalaman di kampung sangat menyeronokkan kerana udaranya bersih dan segar.`,
+                questions: [
+                    { id: 0, type: "mcq", question: "1. Di manakah kampung halaman penulis?", options: ["Kuala Kangsar, Perak", "Muar, Johor", "Ipoh, Perak", "Kota Bharu, Kelantan"], answer: "Kuala Kangsar, Perak" },
+                    { id: 1, type: "mcq", question: "2. Siapakah yang dilawati oleh penulis?", options: ["Datuk dan nenek", "Kawan sekolah", "Cikgu Bahasa Melayu", "Mak cik"], answer: "Datuk dan nenek" },
+                    { id: 2, type: "mcq", question: "3. Apakah buah yang dipetik oleh penulis di dusun?", options: ["Rambutan dan durian", "Epal dan anggur", "Pisang dan mangga", "Tembikai"], answer: "Rambutan dan durian" },
+                    { id: 3, type: "tf", question: "4. Penulis membantu nenek memberi makan ayam dan itik.", answer: "Betul" },
+                    { id: 4, type: "tf", question: "5. Penulis berasa bosan berada di kampung.", answer: "Salah" },
+                    { id: 5, type: "fill", question: "6. Penulis belajar memancing [BLANK] di sungai.", words: ["ikan", "udang", "katak", "penyu"], answer: "ikan" },
+                    { id: 6, type: "fill", question: "7. Udara di kampung sangat [BLANK] dan segar.", words: ["bersih", "kotor", "panas", "berhabuk"], answer: "bersih" },
+                    { id: 7, type: "mcq", question: "8. Dengan siapakah penulis memancing ikan?", options: ["Sepupu", "Datuk", "Nenek", "Seorang diri"], answer: "Sepupu" },
+                    { id: 8, type: "reorder", question: "9. Susun perkataan menjadi ayat yang betul:", scramble: ["Datuk", "dusun", "ada", "buah", "di kampung"], answer: "Datuk ada dusun buah di kampung" },
+                    { id: 9, type: "mcq", question: "10. Mengapakah pengalaman di kampung menyeronokkan?", options: ["Dapat lakukan pelbagai aktiviti menarik", "Kerana tiada elektrik", "Sebab kena duduk dalam rumah sahaja", "Kerana tidak dapat berjumpa nenek"], answer: "Dapat lakukan pelbagai aktiviti menarik" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Makanan Sihat & Gaya Hidup",
+                badge: "Petikan 3",
+                colorTheme: "border-emerald-300 bg-emerald-50",
+                content: `Kesihatan badan sangat penting untuk kita. Kita mesti makan makanan seimbang seperti buah-buahan, sayur-sayuran, dan nasi.
+
+Kita perlu mengurangkan makanan manis dan minuman berkarbonat. Makanan tinggi gula boleh menyebabkan sakit kencing manis dan kegemukan.
+
+Selain itu, kita hendaklah bersenam sekurang-kurangnya 30 minit sehari. Tidur yang cukup selama 8 jam semalam juga menjadikan badan kita cergas dan minda sihat.`,
+                questions: [
+                    { id: 0, type: "mcq", question: "1. Mengapakah kesihatan badan sangat penting?", options: ["Supaya badan kekal sihat dan cergas", "Supaya boleh tidur sepanjang hari", "Supaya tidak perlu belajar", "Sebab hendak main game"], answer: "Supaya badan kekal sihat dan cergas" },
+                    { id: 1, type: "mcq", question: "2. Contoh makanan sihat ialah...", options: ["Buah-buahan dan sayur-sayuran", "Gula-gula dan ais krim", "Keropok dan mi se Segera", "Minuman berkarbonat"], answer: "Buah-buahan dan sayur-sayuran" },
+                    { id: 2, type: "mcq", question: "3. Apakah keburukan makanan tinggi gula?", options: ["Boleh menyebabkan kencing manis", "Menjadikan tulang kuat", "Menjadikan kita pandai", "Menyegarkan mata"], answer: "Boleh menyebabkan kencing manis" },
+                    { id: 3, type: "tf", question: "4. Kita digalakkan bersenam sekurang-kurangnya 30 minit sehari.", answer: "Betul" },
+                    { id: 4, type: "tf", question: "5. Minuman berkarbonat sangat elok diminum setiap hari.", answer: "Salah" },
+                    { id: 5, type: "fill", question: "6. Kita memerlukan [BLANK] yang cukup selama 8 jam semalam.", words: ["tidur", "makan", "berlari", "bermain"], answer: "tidur" },
+                    { id: 6, type: "fill", question: "7. Bersenam menjadikan badan kita [BLANK] dan bertenaga.", words: ["cergas", "lemah", "sakit", "letih"], answer: "cergas" },
+                    { id: 7, type: "mcq", question: "8. Apakah yang perlu kita kurangkan dalam pemakanan?", options: ["Makanan manis dan berminyak", "Air kosong", "Sayur hijau", "Buah buahan"], answer: "Makanan manis dan berminyak" },
+                    { id: 8, type: "reorder", question: "9. Susun perkataan menjadi ayat yang betul:", scramble: ["Makan", "makanan", "sihat", "sangat", "penting"], answer: "Makan makanan sihat sangat penting" },
+                    { id: 9, type: "mcq", question: "10. Apakah faedah tidur yang cukup?", options: ["Minda sihat dan badan segar", "Badan menjadi sakit", "Muka jadi merah", "Selalu berasa lapar"], answer: "Minda sihat dan badan segar" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Gotong-Royong di Sekolah",
+                badge: "Petikan 4",
+                colorTheme: "border-amber-300 bg-amber-50",
+                content: `Pada hari Sabtu lalu, SMK Seri Saujana telah mengadakan aktiviti gotong-royong. Semua murid dan guru berkumpul di padang sekolah pada pukul 7:30 pagi.
+
+Murid-murid dibahagikan kepada beberapa kumpulan. Kumpulan A membersihkan bilik darjah, manakala Kumpulan B mengecat pagar sekolah. Kumpulan C pula menyapu daun-daun kering di kawasan taman sekolah.
+
+Aktiviti ini dapat mencantikkan sekolah dan mengeratkan hubungan antara murid dengan guru. Kerja yang berat menjadi ringan apabila dilakukan bersama-sama.`,
+                questions: [
+                    { id: 0, type: "mcq", question: "1. Di manakah aktiviti gotong-royong ini diadakan?", options: ["SMK Seri Saujana", "Taman Rekreasi", "Dewan Bandaraya", "Rumah murid"], answer: "SMK Seri Saujana" },
+                    { id: 1, type: "mcq", question: "2. Pada hari apakah gotong-royong itu dijalankan?", options: ["Sabtu", "Isnin", "Rabu", "Jumaat"], answer: "Sabtu" },
+                    { id: 2, type: "mcq", question: "3. Apakah tugas Kumpulan A?", options: ["Membersihkan bilik darjah", "Mengecat pagar", "Menyapu daun kering", "Memasak makanan"], answer: "Membersihkan bilik darjah" },
+                    { id: 3, type: "tf", question: "4. Kumpulan B bertugas mengecat pagar sekolah.", answer: "Betul" },
+                    { id: 4, type: "tf", question: "5. Semua murid berasa marah semasa bergotong-royong.", answer: "Salah" },
+                    { id: 5, type: "fill", question: "6. Kumpulan C menyapu [BLANK] kering di taman sekolah.", words: ["daun-daun", "batu-batu", "kertas", "plastik"], answer: "daun-daun" },
+                    { id: 6, type: "fill", question: "7. Gotong-royong menjadikan kawasan sekolah kelihatan [BLANK].", words: ["cantik", "kotor", "semak", "gelap"], answer: "cantik" },
+                    { id: 7, type: "mcq", question: "8. Pada pukul berapakah mereka berkumpul di padang?", options: ["7:30 pagi", "8:30 pagi", "9:00 pagi", "10:00 pagi"], answer: "7:30 pagi" },
+                    { id: 8, type: "reorder", question: "9. Susun perkataan menjadi ayat yang betul:", scramble: ["Gotong-royong", "mengeratkan", "dapat", "hubungan", "murid"], answer: "Gotong-royong dapat mengeratkan hubungan murid" },
+                    { id: 9, type: "mcq", question: "10. Apakah pengajaran daripada aktiviti gotong-royong ini?", options: ["Kerja yang berat menjadi ringan jika dibuat bersama", "Buat kerja seorang diri lebih baik", "Tidak perlu bantu guru di sekolah", "Gotong royong buang masa"], answer: "Kerja yang berat menjadi ringan jika dibuat bersama" }
+                ]
+            }
+        ];
+
+        function submitStudentInfo(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('input-name').value.trim();
+            const classInput = document.getElementById('input-class').value.trim();
+
+            if (!nameInput || !classInput) return;
+
+            studentData.name = nameInput;
+            studentData.class = classInput;
+
+            document.getElementById('badge-name').textContent = studentData.name;
+            document.getElementById('badge-class').textContent = 'Kelas: ' + studentData.class;
+            document.getElementById('header-student-badge').classList.remove('hidden');
+
+            document.getElementById('registration-screen').classList.add('hidden');
+            document.getElementById('app-dashboard').classList.remove('hidden');
+
+            selectPassage(0);
+            updateOverallProgress();
+        }
+
+        function resetApp() {
+            if (confirm("Tukar profil pelajar? Rekod jawapan semasa akan dipadamkan.")) {
+                userAnswers = {};
+                studentData = { name: '', class: '' };
+                document.getElementById('header-student-badge').classList.add('hidden');
+                document.getElementById('app-dashboard').classList.add('hidden');
+                document.getElementById('certificate-screen').classList.add('hidden');
+                document.getElementById('registration-screen').classList.remove('hidden');
+                document.getElementById('student-form').reset();
+            }
+        }
+
+        function selectPassage(index) {
+            currentPassageIndex = index;
+
+            // Tab Styling Updates
+            for (let i = 0; i < 4; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                if (i === index) {
+                    tab.className = "passage-tab border-4 border-yellow-400 bg-gradient-to-br from-pink-500 to-purple-600 text-white rounded-3xl p-3.5 text-left transition transform scale-105 shadow-xl relative";
+                } else {
+                    tab.className = "passage-tab border-4 border-slate-200 bg-white text-slate-700 hover:border-purple-300 rounded-3xl p-3.5 text-left transition transform hover:-translate-y-1 shadow-md relative";
+                }
+            }
+
+            const pData = readingPassages[index];
+
+            document.getElementById('passage-badge').textContent = `Modul ${index + 1} daripada 4`;
+            document.getElementById('passage-title').textContent = pData.title;
+            document.getElementById('passage-body').innerHTML = pData.content.replace(/\n\n/g, '<br><br>');
+
+            renderQuestions(pData);
+
+            document.getElementById('btn-prev-passage').disabled = (index === 0);
+            document.getElementById('btn-prev-passage').style.opacity = (index === 0) ? "0.4" : "1";
+
+            window.scrollTo({ top: 100, behavior: 'smooth' });
+        }
+
+        function navigatePassage(step) {
+            const newIndex = currentPassageIndex + step;
+            if (newIndex >= 0 && newIndex < 4) {
+                selectPassage(newIndex);
+            }
+        }
+
+        function renderQuestions(passage) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            passage.questions.forEach((q) => {
+                const qKey = `p${passage.id}_q${q.id}`;
+                const savedAns = userAnswers[qKey];
+
+                const qCard = document.createElement('div');
+                qCard.className = "bg-white border-2 border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm transition hover:border-purple-300";
+                
+                let html = `<div class="font-bold text-slate-800 text-sm sm:text-base mb-3">${q.question}</div>`;
+
+                // A. Multiple Choice (MCQ)
+                if (q.type === 'mcq') {
+                    html += `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">`;
+                    q.options.forEach((opt) => {
+                        const isSelected = savedAns === opt;
+                        const isCorrect = isSelected && opt === q.answer;
+
+                        let btnClass = "border-2 border-slate-200 bg-slate-50 hover:bg-purple-50 hover:border-purple-300 text-slate-700";
+                        if (isSelected) {
+                            btnClass = isCorrect 
+                                ? "border-2 border-emerald-500 bg-emerald-100 text-emerald-950 font-extrabold" 
+                                : "border-2 border-rose-500 bg-rose-100 text-rose-950 font-extrabold";
+                        }
+
+                        html += `
+                            <button onclick="handleAnswer('${qKey}', '${opt.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}')" 
+                                class="text-left px-4 py-2.5 rounded-xl transition text-xs sm:text-sm flex items-center justify-between font-medium ${btnClass}">
+                                <span>${opt}</span>
+                                ${isSelected ? (isCorrect ? '<i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>' : '<i class="fa-solid fa-circle-xmark text-rose-600 text-base"></i>') : ''}
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+
+                // B. True or False (Betul / Salah)
+                else if (q.type === 'tf') {
+                    html += `<div class="flex gap-3">`;
+                    ['Betul', 'Salah'].forEach((opt) => {
+                        const isSelected = savedAns === opt;
+                        const isCorrect = isSelected && opt === q.answer;
+
+                        let btnClass = "border-2 border-slate-200 bg-slate-50 hover:bg-purple-50 text-slate-700";
+                        if (isSelected) {
+                            btnClass = isCorrect 
+                                ? "border-2 border-emerald-500 bg-emerald-100 text-emerald-950 font-extrabold" 
+                                : "border-2 border-rose-500 bg-rose-100 text-rose-950 font-extrabold";
+                        }
+
+                        html += `
+                            <button onclick="handleAnswer('${qKey}', '${opt}', '${q.answer}')" 
+                                class="flex-1 px-4 py-2.5 rounded-xl transition text-xs sm:text-sm text-center font-bold ${btnClass}">
+                                ${opt === 'Betul' ? '<i class="fa-solid fa-check text-emerald-600 mr-1.5"></i>' : '<i class="fa-solid fa-xmark text-rose-600 mr-1.5"></i>'}
+                                ${opt}
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+
+                // C. Fill-in-the-blanks (Pilihan Kata)
+                else if (q.type === 'fill') {
+                    const parts = q.question.split('[BLANK]');
+                    const currentSelected = savedAns || "___";
+                    const isCorrect = savedAns === q.answer;
+
+                    html = `
+                        <div class="font-bold text-slate-800 text-sm sm:text-base mb-3">
+                            ${parts[0]} 
+                            <span class="inline-block px-3 py-1 bg-yellow-300 text-slate-900 border-b-4 border-yellow-500 rounded-lg font-black text-sm">
+                                ${currentSelected}
+                            </span> 
+                            ${parts[1]}
+                        </div>
+                        <div class="text-xs text-slate-500 mb-2 font-semibold">Klik pilihan kata di bawah:</div>
+                        <div class="flex flex-wrap gap-2">
+                    `;
+
+                    q.words.forEach(w => {
+                        const isSelectedWord = savedAns === w;
+                        let wordBtnClass = "bg-slate-100 border-2 border-slate-200 text-slate-700 hover:bg-yellow-100 hover:border-yellow-300";
+                        if (isSelectedWord) {
+                            wordBtnClass = isCorrect ? "bg-emerald-500 text-white font-black border-emerald-600" : "bg-rose-500 text-white font-black border-rose-600";
+                        }
+
+                        html += `
+                            <button onclick="handleAnswer('${qKey}', '${w}', '${q.answer}')" 
+                                class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition shadow-sm ${wordBtnClass}">
+                                ${w}
+                            </button>
+                        `;
+                    });
+
+                    html += `</div>`;
+                }
+
+                // D. Sentence Reorder
+                else if (q.type === 'reorder') {
+                    const currentArr = savedAns ? savedAns.split(' ') : [];
+                    const isComplete = currentArr.length === q.scramble.length;
+                    const isCorrect = savedAns === q.answer;
+
+                    html = `
+                        <div class="font-bold text-slate-800 text-sm sm:text-base mb-2">${q.question}</div>
+                        <div class="bg-slate-50 p-3 rounded-2xl border-2 border-dashed border-purple-300 min-h-[48px] mb-3 flex flex-wrap gap-2 items-center">
+                    `;
+
+                    if (currentArr.length === 0) {
+                        html += `<span class="text-slate-400 text-xs font-medium">Klik kata di bawah ikut urutan betul...</span>`;
+                    } else {
+                        currentArr.forEach((w) => {
+                            html += `
+                                <span class="bg-purple-600 text-white px-3 py-1 rounded-xl text-xs font-bold shadow-sm">
+                                    ${w}
+                                </span>
+                            `;
+                        });
+                    }
+
+                    html += `</div><div class="flex flex-wrap gap-2">`;
+
+                    q.scramble.forEach((word) => {
+                        const countInSentence = currentArr.filter(x => x === word).length;
+                        const totalInScramble = q.scramble.filter(x => x === word).length;
+                        const isDisabled = countInSentence >= totalInScramble;
+
+                        html += `
+                            <button ${isDisabled ? 'disabled' : ''} onclick="appendWordToReorder('${qKey}', '${word}', '${q.answer}', ${q.scramble.length})" 
+                                class="px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm ${isDisabled ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'bg-white border-2 border-slate-200 text-slate-700 hover:bg-purple-50'}">
+                                ${word}
+                            </button>
+                        `;
+                    });
+
+                    if (currentArr.length > 0) {
+                        html += `
+                            <button onclick="resetReorder('${qKey}')" class="px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition ml-auto">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Semula
+                            </button>
+                        `;
+                    }
+
+                    html += `</div>`;
+
+                    if (isComplete) {
+                        html += `
+                            <div class="mt-2 text-xs font-extrabold ${isCorrect ? 'text-emerald-600' : 'text-rose-600'} flex items-center gap-1">
+                                <i class="fa-solid ${isCorrect ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
+                                <span>${isCorrect ? 'Susunan ayat betul!' : 'Susunan ayat salah. Sila cuba semula.'}</span>
+                            </div>
+                        `;
+                    }
+                }
+
+                qCard.innerHTML = html;
+                container.appendChild(qCard);
+            });
+        }
+
+        function handleAnswer(qKey, chosenAnswer, correctAnswer) {
+            userAnswers[qKey] = chosenAnswer;
+            renderQuestions(readingPassages[currentPassageIndex]);
+            updateOverallProgress();
+        }
+
+        function appendWordToReorder(qKey, word, correctAnswer, totalWords) {
+            const currentStr = userAnswers[qKey] || '';
+            const currentArr = currentStr ? currentStr.split(' ') : [];
+            
+            if (currentArr.length < totalWords) {
+                currentArr.push(word);
+                userAnswers[qKey] = currentArr.join(' ');
+                renderQuestions(readingPassages[currentPassageIndex]);
+                updateOverallProgress();
+            }
+        }
+
+        function resetReorder(qKey) {
+            delete userAnswers[qKey];
+            renderQuestions(readingPassages[currentPassageIndex]);
+            updateOverallProgress();
+        }
+
+        function updateOverallProgress() {
+            let totalAnswered = 0;
+            let totalScore = 0;
+
+            readingPassages.forEach((p) => {
+                let passageAnsweredCount = 0;
+
+                p.questions.forEach((q) => {
+                    const qKey = `p${p.id}_q${q.id}`;
+                    const ans = userAnswers[qKey];
+
+                    if (ans && ans.length > 0) {
+                        totalAnswered++;
+                        passageAnsweredCount++;
+
+                        if (ans === q.answer) {
+                            totalScore++;
+                        }
+                    }
+                });
+
+                const statusEl = document.getElementById(`status-${p.id}`);
+                if (passageAnsweredCount === 10) {
+                    statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>`;
+                } else if (passageAnsweredCount > 0) {
+                    statusEl.innerHTML = `<span class="text-[10px] bg-yellow-400 text-slate-900 font-black px-1.5 py-0.5 rounded-full">${passageAnsweredCount}/10</span>`;
+                } else {
+                    statusEl.innerHTML = `<i class="fa-regular fa-circle"></i>`;
+                }
+            });
+
+            const progressBar = document.getElementById('overall-progress-bar');
+            const progressText = document.getElementById('overall-progress-text');
+            const liveScore = document.getElementById('live-score');
+            const btnCert = document.getElementById('btn-show-cert');
+
+            const percent = Math.round((totalAnswered / 40) * 100);
+            progressBar.style.width = `${percent}%`;
+            progressText.textContent = `${totalAnswered} / 40 Soalan (${percent}%)`;
+            liveScore.textContent = `${totalScore} / 40`;
+
+            if (totalAnswered >= 30) {
+                btnCert.disabled = false;
+                btnCert.className = "bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 hover:from-emerald-500 hover:to-cyan-600 text-white font-display font-extrabold px-5 py-3 rounded-2xl flex items-center gap-2 transition text-xs sm:text-sm shadow-lg animate-bounce";
+            } else {
+                btnCert.disabled = true;
+                btnCert.className = "bg-slate-300 text-slate-500 font-display font-bold px-4 py-3 rounded-2xl cursor-not-allowed flex items-center gap-2 transition text-xs sm:text-sm shadow-sm";
+            }
+        }
+
+        function openCertificateScreen() {
+            let totalScore = 0;
+            readingPassages.forEach((p) => {
+                p.questions.forEach((q) => {
+                    const qKey = `p${p.id}_q${q.id}`;
+                    if (userAnswers[qKey] === q.answer) {
+                        totalScore++;
+                    }
+                });
+            });
+
+            const percentage = Math.round((totalScore / 40) * 100);
+            
+            let grade = "BAIK";
+            if (percentage >= 85) grade = "CEMERLANG";
+            else if (percentage >= 70) grade = "SANGAT BAIK";
+            else if (percentage >= 50) grade = "KEPUJIAN";
+            else grade = "LULUS";
+
+            document.getElementById('cert-student-name').textContent = studentData.name.toUpperCase();
+            document.getElementById('cert-student-class').textContent = `Kelas: ${studentData.class}`;
+            document.getElementById('cert-score-num').textContent = `${totalScore} / 40`;
+            document.getElementById('cert-score-percent').textContent = `${percentage}%`;
+            document.getElementById('cert-grade-text').textContent = grade;
+
+            const today = new Date();
+            const options = { day: '2-digit', month: 'long', year: 'numeric' };
+            document.getElementById('cert-date').textContent = today.toLocaleDateString('ms-MY', options);
+
+            document.getElementById('app-dashboard').classList.add('hidden');
+            document.getElementById('certificate-screen').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function closeCertificate() {
+            document.getElementById('certificate-screen').classList.add('hidden');
+            document.getElementById('app-dashboard').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
